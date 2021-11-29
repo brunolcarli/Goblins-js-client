@@ -15,11 +15,12 @@ function mqtt_connect() {
     mqtt = new Paho.MQTT.Client(host, port, '');
     var options = {
         timeout: 3,
-        onSuccess: on_connect
+        onSuccess: on_connect,
     };
     mqtt.onMessageArrived = on_message;
     mqtt.connect(options);
 }
+
 
 function on_message(msg) {
     var out = JSON.parse(msg.payloadString);
@@ -30,8 +31,4 @@ function on_message(msg) {
         players[player_name]['sprite'].position.y = out["y"];
         drawSprites();
     }
-
-    // goblin.position.x = ;
-    // goblin.position.y = out["y"];
-
 }
