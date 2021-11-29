@@ -27,6 +27,8 @@ function on_message(msg) {
     console.log(out);
     let player_name = out["reference"];
     if (player_name in players) {
+        players[player_name]['x'] = out["x"];
+        players[player_name]['y'] = out["y"];
         players[player_name]['sprite'].position.x = out["x"];
         players[player_name]['sprite'].position.y = out["y"];
         drawSprites();
