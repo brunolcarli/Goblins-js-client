@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <script src="../js/init.js"></script>
+
+        <!-- P5.js game framework -->
+        <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.js"></script>
+        <script src="../js/p5.play.js"></script>
+        <!-- MQTT -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript"></script>
+        <!-- Main logic -->
+        <!-- <script src="../js/forms.js"></script> -->
+        <script src="../js/requests.js"></script>
+        <script src="../js/engine.js"></script>
+        <script src="../js/mqtt_tools.js"></script>
+    </head>
+    <body>
+        <main>
+            <!-- Start connecting to mqtt broker -->
+            <script>mqtt_connect();</script>
+            <!--
+                The main screen is rendered by the P5.js itself
+                on importing the script in the head section above..
+            -->
+            <div id="frame"></div>
+        </main>
+    </body>
+</html>
