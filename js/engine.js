@@ -2,6 +2,7 @@ let goblin;
 let goblin_img;
 let players = {};
 
+
 function get_players() {
     query_entities().then((data) => {
         for (let i=0; i < data.length; i++) {
@@ -28,20 +29,25 @@ function preload() {
 
 
 function setup() {
-    createCanvas(1000, 500);
-    goblin = createSprite(width/2, height/2, 40, 40);
-    goblin.addImage(goblin_img);
-    get_players();
-    console.log(players);
+    var login_status = localStorage.getItem('logged');
+    console.log(login_status);
+    if (login_status){
+        console.log('Logged in!');
+        createCanvas(1000, 500);
+        get_players();
+        console.log(players);
+    }
+    else{
+        console.log('Not logged!');
+        window.location.href = "../index.html";
+    }
 }
-// let character;
+
 
 function draw() {
-    background('rgba(0,255,0, 0.25)');
-    drawSprites();
+    var login_status = localStorage.getItem('logged');
+    if (login_status){
+        background('rgba(0,255,0, 0.25)');
+        drawSprites();
+    }
 }
-
-// function mousePressed() {
-//   sprite.position.x = mouseX;
-//   sprite.position.y = mouseY;
-// }
