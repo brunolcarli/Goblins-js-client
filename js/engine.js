@@ -49,5 +49,14 @@ function draw() {
     if (login_status){
         background('rgba(0,255,0, 0.25)');
         drawSprites();
+
+        // Add player name as sprite label
+        for (const player in players) {
+            text(
+                player,
+                players[player]['x'] - 15,
+                players[player]['y'] - 18
+            );
+        };
     }
 }
