@@ -14,6 +14,20 @@ function move(player, param){
         var x = players[player]['x'];
         var y = players[player]['y'];
         var new_position = options[param](x, y);
+
+        if (new_position[0] > upperBuffer.width - 28){
+            new_position[0] = upperBuffer.width - 28;
+        }
+        else if (new_position[0] < 28){
+            new_position[0] = 28;
+        };
+        if (new_position[1] > upperBuffer.height - 28){
+            new_position[1] = upperBuffer.height - 28;
+        }
+        else if (new_position[1] < 28){
+            new_position[1] = 28;
+        };
+
         console.log(new_position);
 
         update_position(player, new_position[0], new_position[1]);
