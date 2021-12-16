@@ -10,12 +10,14 @@ function handle_action(player, input) {
     }
 }
 
+
 function handle_combat(player, input){
     console.log("Not implemented");
 }
 
+
 function handle_say(player, input){
-    console.log("Not implemented");
+    send_chat_command(player, input.trim());
 }
 
 
