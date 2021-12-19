@@ -5,11 +5,17 @@ var port = 9001;
 
 
 function on_connect() {
+    const topics = [
+        "foo/baz",
+        "log/chat/#",
+        "system/logged_players",
+        "system/logout"
+    ];
     console.log("connected");
-    mqtt.subscribe("foo/baz");
-    console.log("Subscribed to foo/baz");
-    mqtt.subscribe("log/chat/#");
-    console.log("Subscribed to log/chat/#");
+    for (i in topics){
+        mqtt.subscribe(topics[i]);
+        console.log(`Subscribed to ${topics[i]}`);  // TODO: remove this log
+    };
 }
 
 
@@ -45,5 +51,14 @@ function on_message(msg) {
         if (chat_logs.length > 5) {
             chat_logs.shift();
         }
+    }
+    else if (origin == 'system/logged_players'){
+        set_players(out['data']['entities']);
+        draw();
+    }
+    else if (origin == 'system/logout'){
+        // Remove unlogged player sprite
+        players[out['username']]['sprite'].remove();
+        draw();
     }
 }

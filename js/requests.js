@@ -62,7 +62,7 @@ function login_mutation(username, password){
             "Content-Type": "application/json",
         },
         "body": `
-        {\"query\":\"mutation{\\n  logIn(username: \\\"${username}\\\" password: \\\"${password}\\\"){\\n    token\\n  }\\n}\\n\"}`
+        {\"query\":\"mutation{\\n  logIn(input: {username: \\\"${username}\\\" password: \\\"${password}\\\"}){\\n    token\\n  }\\n}\\n\"}`
     })
     .then(json)
     .then(data => {
@@ -70,6 +70,37 @@ function login_mutation(username, password){
         localStorage.setItem('token', data['data']['logIn']['token']);
         localStorage.setItem('user', username);
         window.location.href = "pages/game.html";
+    })
+        .catch(err => {
+            console.error(err);
+    });
+};
+
+
+function logout_mutation(username){
+    /*
+    Request to logout server.
+        - Params:
+            + username: string;
+        - Return: null / undefined
+    */
+    return fetch("http://104.237.1.145:11000/graphql/", {
+        // TODO: remove commented code
+        // return fetch("http://localhost:11000/graphql/", {
+        "method": "POST",
+        "headers": {
+            "cookie": "csrftoken=9YXcKsPnJSojmIXsjvqlM7TFP0tBfiU8GwVopYDWNKHSQnEUKLnPzJdsCjSb0Cfn",
+            "Content-Type": "application/json",
+            "Authorization": `JWT ${token}`
+        },
+        "body": `
+        {\"query\":\"mutation{\\n  logOut(input: {username: \\\"${username}\\\"}){\\n    response\\n  }\\n}\\n\"}`
+    })
+    .then(json)
+    .then(data => {
+        if (data['data']['logOut']['response'] == "Bye Bye"){
+            window.location.href = "../index.html";
+        }
     })
         .catch(err => {
             console.error(err);
