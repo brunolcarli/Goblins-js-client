@@ -28,6 +28,7 @@ function move(player, param){
             new_position[1] = 28;
         };
 
+        // TODO: Remove this log
         console.log(new_position);
 
         update_position(player, new_position[0], new_position[1]);
