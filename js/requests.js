@@ -1,3 +1,6 @@
+// const server_host = 'http://localhost:11000/graphql/';
+const server_host = "http://104.237.1.145:11000/graphql/";
+
 
 function status(response) {
     if (response.status >= 200 && response.status < 300) {
@@ -27,9 +30,7 @@ function query_entities(){
         "Content-Type": "application/json",
         "Authorization": `JWT ${token}`
     };
-    return fetch("http://104.237.1.145:11000/graphql/", {
-        // TODO: remove commented code
-        // return fetch("http://localhost:11000/graphql/", {
+    return fetch(server_host, {
         "method": "POST",
         "headers": headers,
         "body": "{\"query\":\"query{\\n  entities(logged:true){\\n    name\\n    logged\\n    location{\\n      x\\n      y\\n    }\\n  }\\n}\\n\"}"
@@ -53,9 +54,7 @@ function login_mutation(username, password){
             + password: string
         - Return: null / undefined
     */
-    return fetch("http://104.237.1.145:11000/graphql/", {
-        // TODO: remove commented code
-        // return fetch("http://localhost:11000/graphql/", {
+    return fetch(server_host, {
         "method": "POST",
         "headers": {
             "cookie": "csrftoken=9YXcKsPnJSojmIXsjvqlM7TFP0tBfiU8GwVopYDWNKHSQnEUKLnPzJdsCjSb0Cfn",
@@ -84,9 +83,7 @@ function logout_mutation(username){
             + username: string;
         - Return: null / undefined
     */
-    return fetch("http://104.237.1.145:11000/graphql/", {
-        // TODO: remove commented code
-        // return fetch("http://localhost:11000/graphql/", {
+    return fetch(server_host, {
         "method": "POST",
         "headers": {
             "cookie": "csrftoken=9YXcKsPnJSojmIXsjvqlM7TFP0tBfiU8GwVopYDWNKHSQnEUKLnPzJdsCjSb0Cfn",
@@ -123,9 +120,7 @@ function update_position(player, x, y){
         "Content-Type": "application/json",
         "Authorization": `JWT ${token}`
     };
-    return fetch("http://104.237.1.145:11000/graphql/", {
-        // TODO: remove commented code
-        // return fetch("http://localhost:11000/graphql/", {
+    return fetch(server_host, {
         "method": "POST",
         "headers": headers,
         "body": `{\"query\":\"mutation { updatePosition(input: { reference: \\\"${player}\\\" location: { x: ${x} y: ${y} } }){ entity { name location { x y } } } }\"}`
@@ -158,9 +153,7 @@ function send_chat_message(player_name, message, chat_zone){
         "Content-Type": "application/json",
         "Authorization": `JWT ${token}`
     };
-    return fetch("http://104.237.1.145:11000/graphql/", {
-        // TODO: remove commented code
-        // return fetch("http://localhost:11000/graphql/", {
+    return fetch(server_host, {
         "method": "POST",
         "headers": headers,
         "body": `{\"query\":\"mutation { sendChatMessage(input: { playerName: \\\"${player_name}\\\" message: \\\"${message}\\\" chatZone: ${chat_zone.toUpperCase()} }){ chatMessage { message } } }\"}`
