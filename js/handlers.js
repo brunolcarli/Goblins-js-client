@@ -29,7 +29,7 @@ function command(){
         "+": handle_say
     }
     var prefix = command_input[0];
-    var user = localStorage.getItem('user');
+    var user = localStorage.getItem('char_name');
 
     if (prefix in handlers){
         handlers[prefix](user, command_input.replace(prefix, ""));

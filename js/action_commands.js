@@ -27,10 +27,6 @@ function move(player, param){
         else if (new_position[1] < 28){
             new_position[1] = 28;
         };
-
-        // TODO: Remove this log
-        console.log(new_position);
-
         update_position(player, new_position[0], new_position[1]);
     }
 }

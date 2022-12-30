@@ -10,8 +10,6 @@ var lowerBuffer;  // chat window
 
 function set_players(data){
     players = {};  // resets the list
-    console.log('data: ');
-    console.log(data);
     for (let i=0; i < data.length; i++) {
         if (data[i]['logged'] == true){
             goblin = createSprite(
@@ -31,13 +29,14 @@ function set_players(data){
 
 
 function get_players() {
-    query_entities().then((data) => {
+    query_logged_characters().then((data) => {
         set_players(data);
     });
 };
 
 function preload() {
     goblin_img = loadImage('https://raw.githubusercontent.com/brunolcarli/Goblins-Client/master/static/img/goblins/goblin.png');
+    console.log('image loaded');
 }
 
 function draw_upper_buffer() {
@@ -80,7 +79,7 @@ function setup() {
         console.log(players);
     }
     else{
-        console.log('Not logged!');
+        alert('Not logged!');
         window.location.href = "../index.html";
     }
 }
@@ -105,4 +104,21 @@ function draw() {
             );
         };
     }
+}
+
+
+function start_game(){
+    var char_name = document.querySelector('input[name="select_char"]:checked').value;
+    var input_data = `{ characterName: \\\"${char_name}\\\" `;
+    input_data +=  `mapArea: FOREST `;
+    input_data += `serverReference: \\\"server1\\\" }`;
+    var token = localStorage.getItem('token');
+    character_login_mutation(input_data, `JWT ${token}`).then(data => {
+        if (!data['characterLogin']['logStatus']['logged']){
+            alert('Failed to log in');
+            return;
+        }
+        localStorage.setItem('char_name', data['characterLogin']['logStatus']['charName']);
+        window.location.href = 'game.html';
+    });
 }
