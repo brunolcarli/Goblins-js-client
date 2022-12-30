@@ -5,7 +5,7 @@ function send_login_request(){
     login_mutation(user, pwd);
 
     if (localStorage.getItem('logged') == true){
-        window.location.href = "../pages/game.html";
+        window.location.href = "../pages/character.html";
     }
 }
 
@@ -15,7 +15,4 @@ function send_logout_request(){
     console.log(user);
     logout_mutation(user);
 
-    // if (localStorage.getItem('logged') == true){
-    //     window.location.href = "../pages/game.html";
-    // }
 }

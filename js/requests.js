@@ -1,5 +1,5 @@
-// const server_host = 'http://localhost:11000/graphql/';
-const server_host = "http://104.237.1.145:11000/graphql/";
+const server_host = 'http://localhost:11000/graphql/';
+// const server_host = "http://104.237.1.145:11000/graphql/";
 
 
 function status(response) {
@@ -13,6 +13,18 @@ function status(response) {
 
 function json(response) {
     return response.json()
+};
+
+function get_request_options(payload){
+    /* Returns the request method, headers, content... */
+    return {
+      method: 'POST',
+      headers: {
+        cookie: 'csrftoken=pgrjljBkHdbd9hySxmJaFUlewPM1IdYJ09nZstz9N6bCf8pfuctT4ftl2girhj6t',
+        'Content-Type': 'application/json'
+      },
+      body: payload
+    };
 };
 
 
@@ -68,10 +80,10 @@ function login_mutation(username, password){
         localStorage.setItem('logged', true);
         localStorage.setItem('token', data['data']['logIn']['token']);
         localStorage.setItem('user', username);
-        window.location.href = "pages/game.html";
+        window.location.href = "pages/character.html";
     })
-        .catch(err => {
-            console.error(err);
+    .catch(err => {
+        console.error(err);
     });
 };
 
@@ -110,8 +122,7 @@ function update_position(player, x, y){
     Updates player position on the map.
         - Params:
             + player: string;
-            + x: int;
-            + y: int;
+            + x: int;            + y: int;
         - Return: null | undefined
     */
     var token = localStorage.getItem('token');
@@ -164,5 +175,59 @@ function send_chat_message(player_name, message, chat_zone){
     })
     .catch(err => {
             console.error(err);
+    });
+};
+
+
+function user_characters(){
+    var token = localStorage.getItem('token');
+    return fetch(server_host, {
+    "method": "POST",
+    "headers": {
+        "cookie": "csrftoken=ctJzx1RBM4kTPkPWGpZsBIf3EUY8gr0Td2C4OCeWCsslpyXLYCLpjQGYRlxSfFZP",
+        "Content-Type": "application/json",
+        "Authorization": `JWT ${token}`
+    },
+    "body": "{\"query\":\"\\nquery user_chars {\\n\\tuserCharacters{\\n\\t\\tname\\n\\t\\tlogged\\n\\t\\tgoblinClass\\n\\t\\tlv\\n\\t\\tsprite\\n\\t\\tmapArea{\\n\\t\\t\\treference\\n\\t\\t\\tonlineCount\\n\\t\\t}\\n\\t\\tlocation{\\n\\t\\t\\tx\\n\\t\\t\\ty\\n\\t\\t}\\n\\t}\\n}\",\"operationName\":\"user_chars\"}"
+    })
+    .then(json)
+    .then(data => {
+        data = data['data']['userCharacters'];
+        fill_characters_panel(data)
+    })
+    .catch(err => {
+        console.error(err);
+    });
+};
+
+
+function character_login_mutation(input_data, authorization){
+    const query = `characterLogin(input: ${input_data})`;
+    const payload = `{"query": "mutation charLogin{${query}{logStatus{username logged}}}"}`;
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = authorization;
+    return fetch(server_host, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        return response['data'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+function query_logged_characters(){
+    const payload = `{"query": "query characters{ characters(logged: true){ name logged location{ x y } } }"}`;
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = 'JWT ' + localStorage.getItem('token');
+    return fetch(server_host, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        return response['data']['characters'];
+    })
+    .catch(err => {
+      console.error(err);
     });
 };
