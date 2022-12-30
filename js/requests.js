@@ -203,7 +203,7 @@ function user_characters(){
 
 function character_login_mutation(input_data, authorization){
     const query = `characterLogin(input: ${input_data})`;
-    const payload = `{"query": "mutation charLogin{${query}{logStatus{username logged}}}"}`;
+    const payload = `{"query": "mutation charLogin{${query}{logStatus{charName logged}}}"}`;
     var options = get_request_options(payload);
     options['headers']['Authorization'] = authorization;
     return fetch(server_host, options)

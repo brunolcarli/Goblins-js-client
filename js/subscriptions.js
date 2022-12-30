@@ -25,7 +25,20 @@ function graphql_subscribe() {
       console.log('Connecting to broadcaster...');
       const webSocket = new WebSocket(api_host, "graphql-ws");
       webSocket.onmessage = function(event) {
-        console.log(`[message] Data received from server: ${event.data}`);
+        data = JSON.parse(event.data);
+        package_id = data['id'].toString();
+        console.log(data);
+        if (package_id.endsWith('__movement')){
+          let payload = data['payload']['data']['onCharacterMovement'];
+          let player_name = payload['reference'];
+          if (player_name in players) {
+              players[player_name]['x'] = payload["x"];
+              players[player_name]['y'] = payload["y"];
+              players[player_name]['sprite'].position.x = payload["x"];
+              players[player_name]['sprite'].position.y = payload["y"];
+              drawSprites();
+          }
+        }
       };
 
       webSocket.onopen = function(){

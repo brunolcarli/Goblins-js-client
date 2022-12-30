@@ -118,6 +118,7 @@ function start_game(){
             alert('Failed to log in');
             return;
         }
+        localStorage.setItem('char_name', data['characterLogin']['logStatus']['charName']);
         window.location.href = 'game.html';
     });
 }
