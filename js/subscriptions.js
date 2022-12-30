@@ -6,7 +6,7 @@ function sleep(delay) {
 
 function graphql_subscribe() {
     const client_id = 'client__' + Math.random().toString(16).substr(2, 8);
-    const api_host = 'ws://localhost:11000/subscriptions/';
+    const api_host = 'wss://Goblins-Server.brunolcarli.repl.co/subscriptions/';
 
     const GQL = {
         CONNECTION_INIT: 'connection_init',

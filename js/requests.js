@@ -1,5 +1,5 @@
-const server_host = 'http://localhost:11000/graphql/';
-// const server_host = "http://104.237.1.145:11000/graphql/";
+// const server_host = 'http://localhost:11000/graphql/';
+const server_host = "https://Goblins-Server.brunolcarli.repl.co/graphql/";
 
 
 function status(response) {
