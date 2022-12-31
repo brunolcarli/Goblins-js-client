@@ -147,7 +147,7 @@ function update_position(player, x, y){
 };
 
 
-function send_chat_message(player_name, message, chat_zone){
+function send_chat_message(message, chat_zone){
     /*
     Sends a chat message.
     The chat_zone param on the backend is an enum, so the payload
@@ -168,7 +168,7 @@ function send_chat_message(player_name, message, chat_zone){
     return fetch(server_host, {
         "method": "POST",
         "headers": headers,
-        "body": `{\"query\":\"mutation { sendChatMessage(input: { playerName: \\\"${player_name}\\\" message: \\\"${message}\\\" chatZone: ${chat_zone.toUpperCase()} }){ chatMessage { message } } }\"}`
+        "body": `{"query": "mutation SendChatMessage{ sendChatMessage(text: \\\"${message}\\\", chatroom: \\\"${chat_zone}\\\"){ ok }}"}`
     })
     .then(json)
     .then(data => {

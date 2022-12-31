@@ -11,7 +11,11 @@ function onCharacterMovement(data){
 }
 
 function onNewChatMessage(data){
-  // TODO
+  let payload = data['payload']['data']['onNewChatMessage'];
+  chat_logs = chat_logs.concat([payload]);
+  if (chat_logs.length > 5) {
+      chat_logs.shift();
+  }
 }
 
 
@@ -32,14 +36,11 @@ function onCharacterLogIn(data){
 
 
 function onCharacterLogout(data){
-  console.log(data);
   let payload = data['payload']['data']['onCharacterLogout'];
-  console.log(payload);
   let player_name = payload['reference'];
   let player_sprite = players[player_name].sprite;
   removeSprite(player_sprite);
   delete players[player_name];
-  console.log(players);
   drawSprites();
 }
 
@@ -64,8 +65,8 @@ function graphql_subscribe() {
       const valid_operations = {
         'onCharacterMovement': onCharacterMovement,
         'onCharacterLogout': onCharacterLogout,
-        'onCharacterLogin': onCharacterLogIn
-
+        'onCharacterLogin': onCharacterLogIn,
+        'onNewChatMessage': onNewChatMessage
       };
 
       

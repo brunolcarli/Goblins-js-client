@@ -1,8 +1,8 @@
 
 
-function send_chat_command(player_name, message){
+function send_chat_command(player, message){
     /*
     Sends a chat message to backend server;
     */
-    send_chat_message(player_name, message, 'global');
+    send_chat_message(message, 'global');
 };
