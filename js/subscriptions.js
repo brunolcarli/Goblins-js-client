@@ -40,7 +40,6 @@ function onCharacterLogout(data){
   removeSprite(player_sprite);
   delete players[player_name];
   console.log(players);
-  // background('rgba(0,255,0, 0.25)');
   drawSprites();
 }
 

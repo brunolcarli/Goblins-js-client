@@ -15,6 +15,7 @@ function json(response) {
     return response.json()
 };
 
+
 function get_request_options(payload){
     /* Returns the request method, headers, content... */
     return {
@@ -107,7 +108,7 @@ function logout_mutation(username){
     })
     .then(json)
     .then(data => {
-        if (data['data']['logOut']['response'] == "Bye Bye"){
+        if (data['data']['logOut']['response']){
             window.location.href = "../index.html";
         }
     })
@@ -216,6 +217,25 @@ function character_login_mutation(input_data, authorization){
       console.error(err);
     });
 };
+
+
+function character_logout_mutation(input_data, authorization){
+    const query = `characterLogout(input: ${input_data})`;
+    const payload = `{"query": "mutation charLogout{${query}{logStatus{charName logged}}}"}`;
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = authorization;
+    return fetch(server_host, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        return response['data'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
+
 
 function query_logged_characters(){
     const payload = `{"query": "query characters{ characters(logged: true){ name logged location{ x y } } }"}`;
