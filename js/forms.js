@@ -11,8 +11,9 @@ function send_login_request(){
 
 
 function send_logout_request(){
-    // var user = document.getElementById("username_input").value;
-    console.log(user);
+    let token = localStorage.getItem('token');
+    let char_name = localStorage.getItem('char_name');
+    let input_data = `{characterName: \\\"${char_name}\\\"}`;
+    character_logout_mutation(input_data, `JWT ${token}`);
     logout_mutation(user);
-
 }
