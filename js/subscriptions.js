@@ -1,7 +1,49 @@
-function sleep(delay) {
-  var start = new Date().getTime();
-  while (new Date().getTime() < start + delay);
+function onCharacterMovement(data){
+  let payload = data['payload']['data']['onCharacterMovement'];
+  let player_name = payload['reference'];
+  if (player_name in players) {
+      players[player_name]['x'] = payload["x"];
+      players[player_name]['y'] = payload["y"];
+      players[player_name]['sprite'].position.x = payload["x"];
+      players[player_name]['sprite'].position.y = payload["y"];
+      drawSprites();
+  }
 }
+
+function onNewChatMessage(data){
+  // TODO
+}
+
+
+function onCharacterLogIn(data){
+  let payload = data['payload']['data']['onCharacterLogin'];
+  let player_name = payload['reference'];
+
+  goblin = createSprite(payload["x"], payload["y"], 40, 40);
+  goblin.addImage(goblin_img);
+  let player_data = {
+      "x": payload["x"],
+      "y": payload["y"],
+      "sprite": goblin
+  };
+  players[player_name] = player_data;
+  drawSprites();
+}
+
+
+function onCharacterLogout(data){
+  console.log(data);
+  let payload = data['payload']['data']['onCharacterLogout'];
+  console.log(payload);
+  let player_name = payload['reference'];
+  let player_sprite = players[player_name].sprite;
+  removeSprite(player_sprite);
+  delete players[player_name];
+  console.log(players);
+  // background('rgba(0,255,0, 0.25)');
+  drawSprites();
+}
+
 
 
 function graphql_subscribe() {
@@ -20,24 +62,23 @@ function graphql_subscribe() {
         ERROR: 'error',
         COMPLETE: 'complete'
       };
+      const valid_operations = {
+        'onCharacterMovement': onCharacterMovement,
+        'onCharacterLogout': onCharacterLogout,
+        'onCharacterLogin': onCharacterLogIn
+
+      };
 
       
       console.log('Connecting to broadcaster...');
       const webSocket = new WebSocket(api_host, "graphql-ws");
       webSocket.onmessage = function(event) {
         data = JSON.parse(event.data);
+        operation = Object.keys(data['payload']['data'])[0];
         package_id = data['id'].toString();
-        console.log(data);
-        if (package_id.endsWith('__movement')){
-          let payload = data['payload']['data']['onCharacterMovement'];
-          let player_name = payload['reference'];
-          if (player_name in players) {
-              players[player_name]['x'] = payload["x"];
-              players[player_name]['y'] = payload["y"];
-              players[player_name]['sprite'].position.x = payload["x"];
-              players[player_name]['sprite'].position.y = payload["y"];
-              drawSprites();
-          }
+
+        if (operation in valid_operations){
+          valid_operations[operation](data);
         }
       };
 

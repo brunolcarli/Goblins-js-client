@@ -96,8 +96,9 @@ function draw() {
         drawSprites();
 
         // Add player name as sprite label
-        for (const player in players) {
-            text(
+        for (let player in players) {
+            
+            players[player]['label'] = text(
                 player,
                 players[player]['x'] - 15,
                 players[player]['y'] - 18
