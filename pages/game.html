@@ -54,13 +54,22 @@
                 The main screen is rendered by the P5.js itself
                 on importing the script in the head section above..
             -->
-            <div class="well">
-                <input type="text" class="form-control" id="command_input" placeholder="/command">
-                <br />
-                <div class="text-center">
-                    <button type="input" onCLick="command()" class="btn btn-primary">Send</button>
-                </div>    
+            <div>
+                <div style="text-align: left;">
+                    <div style="text-align: center;">
+                        <button onclick="moveup()">UP</button><br><br>
+                        <button onclick="moveleft()">LEFT</button>
+                        <button onclick="moveright()">RIGHT</button><br><br>
+                        <button onclick="movedown()">DOWN</button>
+                    </div>
+                </div>
+
+                <div style="text-align: right;">
+                    <input type="text"  id="message_input" placeholder="message">
+                    <button type="input" onCLick="send_message()">Say</button>
+                </div>
             </div>
+            
         </main>
     </body>
 </html>
