@@ -17,3 +17,15 @@ function send_logout_request(){
     character_logout_mutation(input_data, `JWT ${token}`);
     logout_mutation(user);
 }
+
+function sign_up(){
+    let newUsername = localStorage.getElementById("newUserName").value;
+    let newUserPass = localStorage.getElementById("newUserPass").value;
+    let newUserEmail = localStorage.getElementById("newUserEmail").value;
+
+    new_user_sign_up(newUsername, newUserPass, newUserEmail);
+
+    if (localStorage.getItem('logged') == true){
+        window.location.href = "../pages/character.html";
+    }
+}

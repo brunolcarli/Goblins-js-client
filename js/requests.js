@@ -235,6 +235,28 @@ function character_logout_mutation(input_data, authorization){
     });
 };
 
+function new_user_sign_up(username, password, email){
+    return fetch(server_host, {
+        "method": "POST",
+        "headers": {
+            "cookie": "csrftoken=9YXcKsPnJSojmIXsjvqlM7TFP0tBfiU8GwVopYDWNKHSQnEUKLnPzJdsCjSb0Cfn",
+            "Content-Type": "application/json",
+        },
+        "body": `
+        {\"query\":\"mutation{\\n  signUp(input: {username: \\\"${username}\\\" password: \\\"${password}\\\" password: \\\"${email}\\\"})}`
+    })
+    .then(json)
+    .then(data => {
+        localStorage.setItem('logged', true);
+        localStorage.setItem('token', data['data']['logIn']['token']);
+        localStorage.setItem('user', username);
+        window.location.href = "pages/character.html";
+    })
+    .catch(err => {
+        console.error(err);
+    });
+};
+
 
 
 function query_logged_characters(){
