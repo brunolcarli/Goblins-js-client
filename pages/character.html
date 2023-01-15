@@ -43,12 +43,44 @@
             </div>
         </nav>
 
+        <!-- Character creation Modal -->
         <div id="create_char_form">
             <div class="text-right">
-                <button type="input" onCLick=#() class="glyphicon glyphicon-plus">
+                <button type="button" class="btn btn-light" onclick="document.getElementById('NewCharModal').style.display='block'" >
                     New Character
                 </button>
             </div>
+                <div id="NewCharModal" class="modal" tabindex="-1" >
+                    <div class="modal-content">
+                        <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="char-name" class="col-form-label">Character Nickname:</label>
+                                <input type="text" class="form-control" id="char-name-creation">
+                            </div>
+                            <div>
+                                <select id="char-class-select" class="char-class-select" aria-label="Character Class">
+                                    <option selected>Choose the Goblin Class</option>
+                                    <option value="WARRIOR">Warrior</option>
+                                    <option value="RANGER">Ranger</option>
+                                    <option value="MAGICIAN">Magician</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <button type="button" class="btn btn-outline-success" onclick="send_create_character_request()">Create</button>
+                    <button type="button" onclick="document.getElementById('NewCharModal').style.display='none'" class="btn btn-outline-danger" title="Close Modal">Cancel</button>      
+                </div>
+            </div>
+            <script>
+
+                var modal = document.getElementById('NewCharModal');
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                            modal.style.display = "none";
+                    }
+                }
+            </script>     
         </div>
 
         <!-- MAIN CHAR SElECTION (IF ANY) -->
@@ -58,12 +90,12 @@
             <br />
         </div>
 
-        <!-- SERVER SELECTION -->
+        <!-- SERVER SELECTION
         <div class="container">
             <h2>Select Server</h2>
             <form><div class="jumbotron" id="server_panel"></div></form>
             <br />
-        </div>
+        </div> -->
 
         <!-- Confirmation -->
         <div class="container">

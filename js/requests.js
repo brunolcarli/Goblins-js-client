@@ -274,3 +274,20 @@ function query_logged_characters(){
       console.error(err);
     });
 };
+
+
+function create_char_mutation(input_data, token){
+    const payload = `{"query": "mutation create_character{createCharacter(input:${input_data}){character{name}}}"}`;
+    console.log(payload);
+    var options = get_request_options(payload);
+    options['headers']['Authorization'] = 'JWT ' + token;
+    return fetch(server_host, options)
+    .then(json)
+    .then(response => {
+        console.log(response);
+        return response['data'];
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
