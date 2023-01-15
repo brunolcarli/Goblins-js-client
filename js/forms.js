@@ -32,10 +32,6 @@ function sign_up(){
         });
     }
 }
-    new_user_sign_up(newUsername, newUserPass, newUserEmail).then(data => {
-        window.location.href = "../index.html";
-    });
-}
 
 function send_create_character_request(){
     let token = localStorage.getItem('token');
