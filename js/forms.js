@@ -23,7 +23,12 @@ function sign_up(){
     let newUserPass = document.getElementById("newUserPass").value;
     let newUserEmail = document.getElementById("newUserEmail").value;
 
-    new_user_sign_up(newUsername, newUserPass, newUserEmail).then(data => {
-        window.location.href = "../index.html";
-    });
+    if (newUsername == null || newUsername == "", newUserPass == null || newUserPass == "", newUserEmail == null || newUserEmail == "") {
+        alert("Please Fill All Required Field");
+        return false;
+    } else {
+        new_user_sign_up(newUsername, newUserPass, newUserEmail).then(data => {
+            window.location.href = "../index.html";
+        });
+    }
 }
