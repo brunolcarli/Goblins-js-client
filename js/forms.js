@@ -19,13 +19,11 @@ function send_logout_request(){
 }
 
 function sign_up(){
-    let newUsername = localStorage.getElementById("newUserName").value;
-    let newUserPass = localStorage.getElementById("newUserPass").value;
-    let newUserEmail = localStorage.getElementById("newUserEmail").value;
+    let newUsername = document.getElementById("newUserName").value;
+    let newUserPass = document.getElementById("newUserPass").value;
+    let newUserEmail = document.getElementById("newUserEmail").value;
 
-    new_user_sign_up(newUsername, newUserPass, newUserEmail);
-
-    if (localStorage.getItem('logged') == true){
-        window.location.href = "../pages/character.html";
-    }
+    new_user_sign_up(newUsername, newUserPass, newUserEmail).then(data => {
+        window.location.href = "../index.html";
+    });
 }
