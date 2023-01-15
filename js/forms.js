@@ -27,3 +27,18 @@ function sign_up(){
         window.location.href = "../index.html";
     });
 }
+
+function send_create_character_request(){
+    let token = localStorage.getItem('token');
+    let char_name = document.getElementById('char-name-creation').value;
+    let char_class = document.getElementById('char-class-select').value;
+    let input_data = `{name: \\\"${char_name}\\\" goblinClass: ${char_class}}`;
+    create_char_mutation(input_data, token).then(data => {
+        if ('errors' in data){
+            alert('An error ocurred');
+        } else {
+            window.location.href = 'character.html';
+        }
+    });
+    
+}
