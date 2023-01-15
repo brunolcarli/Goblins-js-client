@@ -235,6 +235,29 @@ function character_logout_mutation(input_data, authorization){
     });
 };
 
+function new_user_sign_up(username, password, email){
+    var payload = `{"query":"mutation{signUp(input: {username: \\\"${username}\\\" password: \\\"${password}\\\" email: \\\"${email}\\\"}){user {username}}}"}`;
+    console.log(payload);
+    return fetch(server_host, {
+        "method": "POST",
+        "headers": {
+            "cookie": "csrftoken=9YXcKsPnJSojmIXsjvqlM7TFP0tBfiU8GwVopYDWNKHSQnEUKLnPzJdsCjSb0Cfn",
+            "Content-Type": "application/json",
+        },
+        "body":payload
+    })
+    .then(json)
+    .then(data => {
+        console.log(data);
+        alert("Username registered!!!");
+        return data;
+        // window.location.href = "pages/character.html";
+    })
+    .catch(err => {
+        console.error(err);
+    });
+};
+
 
 
 function query_logged_characters(){
