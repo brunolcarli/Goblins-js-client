@@ -1,5 +1,5 @@
 let goblin;
-let goblin_img;
+let images = {};
 let players = {};
 
 
@@ -16,7 +16,7 @@ function set_players(data){
                 data[i]['location']["x"],
                 data[i]['location']["y"],
                 40, 40);
-            goblin.addImage(goblin_img);
+            goblin.addImage(images['goblin_default']);
             let player_data = {
                 "x": data[i]['location']["x"],
                 "y": data[i]['location']["y"],
@@ -36,8 +36,9 @@ function get_players() {
 
 
 function preload() {
-    goblin_img = loadImage('https://raw.githubusercontent.com/brunolcarli/Goblins-Client/master/static/img/goblins/goblin.png');
-    console.log('image loaded');
+    images['goblin_default'] = loadImage('https://raw.githubusercontent.com/brunolcarli/Goblins-Client/master/static/img/goblins/goblin.png');
+    images['forest_bg'] = loadImage('https://i.ibb.co/b680fpt/Map002.png');
+    console.log('images loaded');
 }
 
 
@@ -45,7 +46,8 @@ function draw_upper_buffer() {
     /*
     Draws the play screen.
     */
-    upperBuffer.background('rgba(0,255,0, 0.25)');
+    // upperBuffer.background('rgba(0,255,0, 0.25)');
+    upperBuffer.background(images['forest_bg']);
 }
 
 
@@ -75,9 +77,9 @@ function setup() {
     console.log(login_status);
     if (login_status){
         console.log('Logged in!');
-        createCanvas(1000, 800);
-        upperBuffer = createGraphics(1000, 500);
-        lowerBuffer = createGraphics(1000, 200);
+        createCanvas(1968, 2744);
+        upperBuffer = createGraphics(1968, 2744);
+        lowerBuffer = createGraphics(1968, 200);
         get_players();
         console.log(players);
     }
@@ -93,8 +95,8 @@ function draw() {
     if (login_status){
         draw_upper_buffer();
         draw_lower_buffer();
-        image(upperBuffer, 0, 0);
-        image(lowerBuffer, 0, 501);
+        image(lowerBuffer, 0, 0);
+        image(upperBuffer, 0, 100);
         // background('rgba(0,255,0, 0.25)');
         drawSprites();
 

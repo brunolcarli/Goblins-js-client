@@ -24,7 +24,7 @@ function onCharacterLogIn(data){
   let player_name = payload['reference'];
 
   goblin = createSprite(payload["x"], payload["y"], 40, 40);
-  goblin.addImage(goblin_img);
+  goblin.addImage(images['goblin_default']);
   let player_data = {
       "x": payload["x"],
       "y": payload["y"],
